@@ -1,0 +1,49 @@
+header {
+    background-color: blue;
+    height: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    color: wheat;
+    z-index: 10;
+    div {
+        display: flex;  
+        align-items: center;
+        div {
+            display: inline-block;
+        }
+    }
+
+    .avatar {
+        padding: 6px 10px;
+        background: white;
+        color: blue;
+        border-radius: 25px;
+        margin: 0 3em;
+    }
+}
+
+.hamIcon {
+    width: 32px;
+    height: 32px;
+    background-size: 32px;
+    margin: 10px;
+}
+
+.heading {
+    color: wheat;
+    font-weight: 600;
+}
+
+main {
+    top: 60px;
+    position: relative;
+}
+
+.leftMargin {
+    margin-left: 400px;
+}
