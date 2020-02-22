@@ -68,6 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 ).permitAll()
                 .antMatchers(SecurityConstants.SIGN_UP_URLS).permitAll()
                 .antMatchers("/insurance/**").permitAll()
+                .antMatchers("/calculatePolicyPrice/**").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
