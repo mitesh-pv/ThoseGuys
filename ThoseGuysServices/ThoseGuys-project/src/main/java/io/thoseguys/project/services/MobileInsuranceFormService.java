@@ -3,7 +3,10 @@ package io.thoseguys.project.services;
 import io.thoseguys.project.domain.MobileInsuranceForm;
 import io.thoseguys.project.repositories.MobileInsuranceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class MobileInsuranceFormService {
@@ -53,4 +56,12 @@ public class MobileInsuranceFormService {
 
         return mobileInsuranceRepository.save(mobileInsuranceForm);
     }
+
+    public List<MobileInsuranceForm> getAllRequest(String status) {
+        return mobileInsuranceRepository.findByStatus(status);
+    }
+
+//    public MobileInsuranceForm updateMobileInsFormUserId(String username){
+//        return mobileInsuranceRepository.updateMobileInsFormUserId(username);
+//    }
 }

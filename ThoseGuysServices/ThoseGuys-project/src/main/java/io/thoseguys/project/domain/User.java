@@ -31,17 +31,6 @@ public class User implements UserDetails {
     private Date create_At;
     private Date update_At;
 
-    @OneToMany(mappedBy = "user")
-    private List<MobileInsuranceForm> insuranceFormList;
-
-    public List<MobileInsuranceForm> getInsuranceFormList() {
-        return insuranceFormList;
-    }
-
-    public void setInsuranceFormList(List<MobileInsuranceForm> insuranceFormList) {
-        this.insuranceFormList = insuranceFormList;
-    }
-
     public User() {
     }
 
