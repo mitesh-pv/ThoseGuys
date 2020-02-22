@@ -61,6 +61,10 @@ public class MobileInsuranceFormService {
         return mobileInsuranceRepository.findByStatus(status);
     }
 
+    public MobileInsuranceForm setMobileInsuranceFormStatus(MobileInsuranceForm mobileInsuranceForm){
+        return mobileInsuranceRepository.save(mobileInsuranceForm);
+    }
+
 //    public MobileInsuranceForm updateMobileInsFormUserId(String username){
 //        return mobileInsuranceRepository.updateMobileInsFormUserId(username);
 //    }

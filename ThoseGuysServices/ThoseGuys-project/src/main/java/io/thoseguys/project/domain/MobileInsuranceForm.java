@@ -44,6 +44,8 @@ public class MobileInsuranceForm implements Serializable {
     @NotEmpty(message = "date cannot be empty")
     private String dateOfPurchase;
 
+
+
     public String getDateOfPurchase() {
         return dateOfPurchase;
     }
