@@ -42,13 +42,13 @@ public class MobileInsuranceForm implements Serializable {
     private String status;
 
     @NotEmpty(message = "date cannot be empty")
-    private LocalDate dateOfPurchase;
+    private String dateOfPurchase;
 
-    public LocalDate getDateOfPurchase() {
+    public String getDateOfPurchase() {
         return dateOfPurchase;
     }
 
-    public void setDateOfPurchase(LocalDate dateOfPurchase) {
+    public void setDateOfPurchase(String dateOfPurchase) {
         this.dateOfPurchase = dateOfPurchase;
     }
 
