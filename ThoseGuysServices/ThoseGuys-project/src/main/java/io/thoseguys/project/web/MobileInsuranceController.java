@@ -15,6 +15,7 @@ import javax.xml.ws.Response;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @RestController
 @RequestMapping("insurance")
@@ -77,5 +78,20 @@ public class MobileInsuranceController {
 //            mobileInsuranceFormService.updateMobileInsFormUserId(mobileInsuranceForm1.getUsername());
 //        }
         return ResponseEntity.ok(userInsDetails1);
+    }
+
+    @GetMapping("/allRequest/{username}")
+    public ResponseEntity<?> getAllMobileInsReq(@PathVariable("username") String username){
+
+//        List<MobileInsuranceForm> mobileInsuranceFormsList = mobileInsuranceFormService.getAllRequestFromAUser(username);
+
+//        if(mobileInsuranceFormsList == null){
+//            return ResponseEntity.noContent().build();
+//        }
+
+//        return ResponseEntity.ok(username);
+
+        return ResponseEntity.ok(mobileInsuranceFormService.getAllRequestFromAUser(username));
+
     }
 }
