@@ -9,11 +9,13 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @Email(message = "Username needs to be an email")
@@ -28,6 +30,17 @@ public class User implements UserDetails {
     private String confirmPassword;
     private Date create_At;
     private Date update_At;
+
+    @OneToMany(mappedBy = "user")
+    private List<MobileInsuranceForm> insuranceFormList;
+
+    public List<MobileInsuranceForm> getInsuranceFormList() {
+        return insuranceFormList;
+    }
+
+    public void setInsuranceFormList(List<MobileInsuranceForm> insuranceFormList) {
+        this.insuranceFormList = insuranceFormList;
+    }
 
     public User() {
     }
