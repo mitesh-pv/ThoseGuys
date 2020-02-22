@@ -57,10 +57,10 @@ public class MobileInsuranceController {
 
         for(MobileInsuranceForm mobileInsuranceForm: userInsDetails.getInsuranceFormList()){
 
-            LocalDate purchaseDate = LocalDate.parse ("2018-02-13");
+            LocalDate purchaseDate = LocalDate.parse(mobileInsuranceForm.getDateOfPurchase());
             LocalDate currentDate = LocalDate.now();
 
-            if(ChronoUnit.DAYS.between(purchaseDate, currentDate)>31){
+            if(ChronoUnit.DAYS.between(purchaseDate, currentDate)>31L){
                 return ResponseEntity
                         .badRequest()
                         .body("Mobile not eligible for insurance. " +
@@ -78,20 +78,4 @@ public class MobileInsuranceController {
 //        }
         return ResponseEntity.ok(userInsDetails1);
     }
-
-    @GetMapping("/pending")
-    public ResponseEntity<?> getPendingApprovalsForAdmin(){
-        return ResponseEntity.ok(mobileInsuranceFormService.getAllRequest("p"));
-    }
-
-    @GetMapping("/notApproved")
-    public ResponseEntity<?> getNotApprovedApprovalsForAdmin(){
-        return ResponseEntity.ok(mobileInsuranceFormService.getAllRequest("na"));
-    }
-
-    @GetMapping("/approved")
-    public ResponseEntity<?> getApprovedApprovalsForAdmin(){
-        return ResponseEntity.ok(mobileInsuranceFormService.getAllRequest("a"));
-    }
-
 }
