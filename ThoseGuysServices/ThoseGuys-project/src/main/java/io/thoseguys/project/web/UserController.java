@@ -3,6 +3,7 @@ package io.thoseguys.project.web;
 import io.thoseguys.project.domain.User;
 import io.thoseguys.project.payload.JWTLoginSucessReponse;
 import io.thoseguys.project.payload.LoginRequest;
+import io.thoseguys.project.repositories.UserRepository;
 import io.thoseguys.project.security.JwtTokenProvider;
 import io.thoseguys.project.services.MapValidationErrorService;
 import io.thoseguys.project.services.UserService;
@@ -55,7 +56,11 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = SecurityConstants.TOKEN_PREFIX +  tokenProvider.generateToken(authentication);
 
-        return ResponseEntity.ok(new JWTLoginSucessReponse(true, jwt));
+        String fullName = userService
+                .getFullNameFromUserRepository(loginRequest.getUsername())
+                .getFullName();
+
+        return ResponseEntity.ok(new JWTLoginSucessReponse(true, jwt, fullName));
     }
 
     @PostMapping("/register")

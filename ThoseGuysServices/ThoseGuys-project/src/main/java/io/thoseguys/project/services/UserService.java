@@ -14,7 +14,6 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -32,9 +31,9 @@ public class UserService {
         }catch (Exception e){
             throw new UsernameAlreadyExistsException("Username '"+newUser.getUsername()+"' already exists");
         }
-
     }
 
-
-
+    public User getFullNameFromUserRepository(String username){
+        return userRepository.findByUsername(username);
+    }
 }

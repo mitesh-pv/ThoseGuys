@@ -1,21 +1,27 @@
 package io.thoseguys.project.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Entity
 public class MobileInsuranceForm implements Serializable {
 
     @Id
-    @Column(name = "ins_id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
     @NotBlank(message = "name cannot be empty")
     private String name;
+
+    @Email(message = "should be email")
+    private String username;
 
     @NotNull(message = "price cannot be empty")
     private Double price;
@@ -29,22 +35,33 @@ public class MobileInsuranceForm implements Serializable {
     @NotNull(message = "mobile number cannot be blank")
     private Long mobileNumber;
 
-    // File
     @NotBlank(message = "bill number cannot be blank")
     private String billNumber;
 
     @NotBlank(message = "Status cannot be empty")
     private String status;
 
-    @ManyToOne
-    private User user;
+    @NotEmpty(message = "date cannot be empty")
+    private LocalDate dateOfPurchase;
 
-    public User getUser() {
-        return user;
+    public LocalDate getDateOfPurchase() {
+        return dateOfPurchase;
+    }
+
+    public void setDateOfPurchase(LocalDate dateOfPurchase) {
+        this.dateOfPurchase = dateOfPurchase;
     }
 
     public Long getMobileNumber() {
         return mobileNumber;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setMobileNumber(Long mobileNumber) {
@@ -57,10 +74,6 @@ public class MobileInsuranceForm implements Serializable {
 
     public void setBillNumber(String billNumber) {
         this.billNumber = billNumber;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Long getId() {

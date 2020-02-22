@@ -2,12 +2,19 @@ package io.thoseguys.project.web;
 
 import io.thoseguys.project.domain.Insurance;
 import io.thoseguys.project.domain.MobileInsuranceForm;
+import io.thoseguys.project.domain.UserInsDetails;
 import io.thoseguys.project.repositories.InsuranceRepository;
 import io.thoseguys.project.services.MobileInsuranceFormService;
+import io.thoseguys.project.services.UserInsDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.xml.ws.Response;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @RestController
 @RequestMapping("insurance")
@@ -19,6 +26,9 @@ public class MobileInsuranceController {
 
     @Autowired
     private MobileInsuranceFormService mobileInsuranceFormService;
+
+    @Autowired
+    private UserInsDetailsService userInsDetailsService;
 
     @GetMapping(path="/all")
     public ResponseEntity<?> getAllInsurance(){
@@ -33,19 +43,55 @@ public class MobileInsuranceController {
 
     @PostMapping("/applyInsurance")
     public ResponseEntity<?> getInsuranceApprovalResponse(
-            @RequestBody MobileInsuranceForm mobileInsuranceForm){
+            @RequestBody UserInsDetails userInsDetails){
 
         String msg = "invalid imei number";
 
+//        return ResponseEntity.ok(userInsDetails.getInsuranceFormList());
 
-
-        if(!mobileInsuranceFormService.validateIMEINumber(mobileInsuranceForm.getImeiNumber())){
-            return ResponseEntity.badRequest().body(msg);
+        for(MobileInsuranceForm mobileInsuranceForm : userInsDetails.getInsuranceFormList()){
+            if(!mobileInsuranceFormService.validateIMEINumber(mobileInsuranceForm.getImeiNumber())){
+                return ResponseEntity.badRequest().body("IMEI no. is not valid");
+            }
         }
 
-        return ResponseEntity.ok(mobileInsuranceFormService.saveToInsuranceRepository(mobileInsuranceForm));
-//        return ResponseEntity.ok("ok created");
-//        return ResponseEntity.ok(mobileInsuranceForm.getPrice());
+        for(MobileInsuranceForm mobileInsuranceForm: userInsDetails.getInsuranceFormList()){
+
+            LocalDate purchaseDate = LocalDate.parse ("2018-02-13");
+            LocalDate currentDate = LocalDate.now();
+
+            if(ChronoUnit.DAYS.between(purchaseDate, currentDate)>31){
+                return ResponseEntity
+                        .badRequest()
+                        .body("Mobile not eligible for insurance. " +
+                                "Date of purchased is more than one month");
+            }
+        }
+
+
+//        MobileInsuranceForm mobileInsuranceForm1 =
+//                mobileInsuranceFormService.saveToInsuranceRepository(mobileInsuranceForm);
+        UserInsDetails userInsDetails1 = userInsDetailsService.saveUserDetails(userInsDetails);
+
+//        if(mobileInsuranceForm1 != null){
+//            mobileInsuranceFormService.updateMobileInsFormUserId(mobileInsuranceForm1.getUsername());
+//        }
+        return ResponseEntity.ok(userInsDetails1);
+    }
+
+    @GetMapping("/pending")
+    public ResponseEntity<?> getPendingApprovalsForAdmin(){
+        return ResponseEntity.ok(mobileInsuranceFormService.getAllRequest("p"));
+    }
+
+    @GetMapping("/notApproved")
+    public ResponseEntity<?> getNotApprovedApprovalsForAdmin(){
+        return ResponseEntity.ok(mobileInsuranceFormService.getAllRequest("na"));
+    }
+
+    @GetMapping("/approved")
+    public ResponseEntity<?> getApprovedApprovalsForAdmin(){
+        return ResponseEntity.ok(mobileInsuranceFormService.getAllRequest("a"));
     }
 
 }
