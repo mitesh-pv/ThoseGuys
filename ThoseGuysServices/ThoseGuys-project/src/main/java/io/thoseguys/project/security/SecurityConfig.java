@@ -70,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/insurance/**").permitAll()
                 .antMatchers("/calculatePolicyPrice/**").permitAll()
                 .antMatchers("/admin/**").permitAll()
+                .antMatchers("/admin-login/**").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
