@@ -68,4 +68,8 @@ public class MobileInsuranceFormService {
 //    public MobileInsuranceForm updateMobileInsFormUserId(String username){
 //        return mobileInsuranceRepository.updateMobileInsFormUserId(username);
 //    }
+
+    public List<MobileInsuranceForm> getAllRequestFromAUser(String username){
+        return mobileInsuranceRepository.findAllByUsername(username);
+    }
 }

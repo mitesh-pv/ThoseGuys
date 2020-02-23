@@ -78,4 +78,19 @@ public class MobileInsuranceController {
 //        }
         return ResponseEntity.ok(userInsDetails1);
     }
+
+    @GetMapping("/allRequest/{username}")
+    public ResponseEntity<?> getAllMobileInsReq(@PathVariable("username") String username){
+
+//        List<MobileInsuranceForm> mobileInsuranceFormsList = mobileInsuranceFormService.getAllRequestFromAUser(username);
+
+//        if(mobileInsuranceFormsList == null){
+//            return ResponseEntity.noContent().build();
+//        }
+
+//        return ResponseEntity.ok(username);
+
+        return ResponseEntity.ok(mobileInsuranceFormService.getAllRequestFromAUser(username));
+
+    }
 }

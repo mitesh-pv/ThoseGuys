@@ -12,9 +12,14 @@ public class DBFile {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
+
     private String fileName;
 
     private String fileType;
+
+    private String userid;
+
+
 
     @Lob
     private byte[] data;
@@ -23,10 +28,19 @@ public class DBFile {
 
     }
 
-    public DBFile(String fileName, String fileType, byte[] data) {
+    public DBFile(String fileName, String fileType, byte[] data, String userid) {
         this.fileName = fileName;
         this.fileType = fileType;
         this.data = data;
+        this.userid=userid;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
     public String getId() {
