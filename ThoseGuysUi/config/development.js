@@ -1,5 +1,8 @@
 module.exports = {
     "port" : 9000,
-    "host":"http://localhost:3000",
-    "yourBusBaseUrl": "http://stage.yourbus.in:5000"
+     "apiUrl":"http://c90e6abf.ngrok.io",
+     "apiHeader":{
+        'Content-Type': 'application/json',
+        'Authentication':''
+     }
 }

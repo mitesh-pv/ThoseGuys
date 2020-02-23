@@ -31,23 +31,53 @@ app.use((err, req, res, next) => {
 });
 
 login = (req, res, next) => {
-  console.log("login")
-
   if(req.cookies.auth!=undefined){
-      res.redirect("/home/test")
+    if(req.cookies.auth.userType=="user")
+      res.redirect("/home/user/apply")
+      else
+      res.redirect("/home/admin/pending")
   }else {
       next()
   }
 }
 accessProtect = (req, res, next) => {
+  // console.log(req.cookies.auth)
   if (req.cookies.auth!=undefined) {
+    if(JSON.parse(req.cookies.auth).userType=="user"){
     next();
+    }
+    else {
+      res.status(403);
+      res.redirect("/home/admin/pending");
+    }
   } else {
     res.status(403);
-    res.redirect("/signin");
+    res.redirect("/login");
   }
 }
-app.get('/signin',login, function response(req, res) {
+adminProtect = (req, res, next) => {
+  
+  if (req.cookies.auth!=undefined) {
+    
+    if(JSON.parse(req.cookies.auth).userType=="admin"){
+      next();
+      }
+      else {
+        res.status(403);
+        res.redirect("/home/user/apply");
+      }
+  } else {
+    res.status(403);
+    res.redirect("/login");
+  }
+}
+app.get('/login',login, function response(req, res) {
+  res.header("Cache-Control", "private, no-cache, no-store, must-revalidate");
+  res.header("Expires", "-1");
+  res.header("Pragma", "no-cache");
+  res.render("index");
+});
+app.get('/signup',login, function response(req, res) {
   res.header("Cache-Control", "private, no-cache, no-store, must-revalidate");
   res.header("Expires", "-1");
   res.header("Pragma", "no-cache");
@@ -55,12 +85,20 @@ app.get('/signin',login, function response(req, res) {
 });
 
 
-app.get('/home/*',accessProtect, function response(req, res) {
+app.get('/home/user/*',accessProtect, function response(req, res) {
   res.header("Cache-Control", "private, no-cache, no-store, must-revalidate");
   res.header("Expires", "-1");
   res.header("Pragma", "no-cache");
   res.render("index");
 });
+
+app.get('/home/admin/*',adminProtect, function response(req, res) {
+  res.header("Cache-Control", "private, no-cache, no-store, must-revalidate");
+  res.header("Expires", "-1");
+  res.header("Pragma", "no-cache");
+  res.render("index");
+});
+
 
 
 
