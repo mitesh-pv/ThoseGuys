@@ -16,6 +16,11 @@ import Box from '@material-ui/core/Box';
 import Cookies from 'js-cookie';
 import Button from "@material-ui/core/Button"
 
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItem from '@material-ui/core/ListItem';
+import List from '@material-ui/core/List';
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
+
 
 const drawerWidth = 350;
 
@@ -40,7 +45,7 @@ const styles = theme => ({
     },
     menuButton: {
         marginRight: 36,
-        left: "-830%"
+        // left: "-830%"
     },
     hide: {
         display: 'none',
@@ -79,6 +84,10 @@ const styles = theme => ({
         flexGrow: 1,
         padding: theme.spacing(3),
     },
+    logout: {
+        left: "160%",
+        position: "absolute"
+    }
 });
 
 
@@ -102,25 +111,34 @@ class SideNav extends React.Component {
 
         this.props.sideNavClick()
     };
-    handleLogOut=()=>{
+    handleLogOut = () => {
         console.log("log out")
         Cookies.remove("auth");
-        location.href="http://localhost:9000/signin";
+        location.href = "http://localhost:9000/login";
     }
-    
+    handlePendingRequest = () => {
+        location.href = "http://localhost:9000/home/admin/pending"
+    }
+    handleApprovedRequest = () => {
+        location.href = "http://localhost:9000/home/admin/approved"
+    }
+    handleApplyInsurance = () => {
+        location.href = "http://localhost:9000/home/user/apply"
+    }
+    handleAllRequest = () => {
+        location.href = "http://localhost:9000/home/user/allrequest"
+    }
+
 
     render() {
         const { classes, Component, rprops, theme } = this.props;
         return (
             <div className={classes.root}>
                 <AppBar
-                    position="fixed"
                     className={clsx(classes.appBar, {
                         [classes.appBarShift]: this.state.open,
                     })}
                 >
-                    <Button
-                    onClick={this.handleLogOut}>logout</Button>
                     <Toolbar>
                         <IconButton
                             color="inherit"
@@ -132,8 +150,15 @@ class SideNav extends React.Component {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h6" noWrap>
-
+                            ThoseGuys Insurance Inc.
                         </Typography>
+                        <IconButton
+                            style={{ position: "absolute", right: "4%" }}
+                            onClick={this.handleLogOut}>
+                            <PowerSettingsNewIcon
+                                style={{ color: "white" }}
+                            />
+                        </IconButton>
                     </Toolbar>
                 </AppBar>
                 <Drawer
@@ -150,11 +175,12 @@ class SideNav extends React.Component {
                     }}
                     open={this.state.open}>
                     <div className={classes.toolbar}>
-                        <div style={{ position: "absolute", left: "5%" }}>
-                            <Typography>
-                                <Box fontWeight="fontWeightMedium" m={0.75}>
-                                    Welcome!
-                            </Box>
+                        <div
+                            style={{ position: "absolute", left: "6%", top: "2%" }}
+                        >
+                            <Typography variant="h5">
+                                Welcome! &nbsp; &nbsp;
+                                    {JSON.parse(Cookies.get("auth")).name}
                             </Typography>
                         </div>
 
@@ -163,10 +189,47 @@ class SideNav extends React.Component {
                         </IconButton>
                     </div>
                     <Divider />
-                    <div>
-                        <NavLink to='/home/test' >Test</NavLink>
+                    {JSON.parse(Cookies.get("auth")).userType == "admin" ?
+                        <div>
+                            <List>
+                                <ListItem button key={"Pending Request"}
+                                    onClick={this.handlePendingRequest}
+                                >
+                                    <Typography variant="h6">
+                                        Pending Request
+                                 </Typography>
+                                </ListItem>
+                            </List>
+                            <Divider />
+                            <Divider />
+                        </div>
+                        :
+                        <div>
+                            <List>
+                                <ListItem button key={"Apply Insurance"}
+                                    onClick={this.handleApplyInsurance}
+                                >
+                                    <Typography variant="h6">
+                                    Apply Insurance
+                                 </Typography>
+                                </ListItem>
+                            </List>
+                            <Divider />
 
-                    </div>
+                            <Divider />
+                            <List>
+                                <ListItem button key={"ALl Request"}
+                                    onClick={this.handleAllRequest}
+                                >
+                                    <Typography variant="h6">
+                                    All Request
+                                 </Typography>
+                                </ListItem>
+                            </List>
+                            <Divider />
+                        </div>
+                    }
+
                 </Drawer>
                 <main className={classes.content}>
                     <div className={classes.toolbar} />

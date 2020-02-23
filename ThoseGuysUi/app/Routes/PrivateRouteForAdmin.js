@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import AppBar from './../LoggedIn/AppBar'
+import SideNav from '../LoggedIn/SideNav'
 
-class PrivateRoute extends React.Component {
+class PrivateRouteForAdmin extends React.Component {
     render() {
         let { component, ...rest } = this.props;
         console.log("props recieved::", this.props);
@@ -10,10 +10,10 @@ class PrivateRoute extends React.Component {
             <Route
                 {...rest}
                 render={props => {
-                    return (<AppBar Component={component} rprops={props} />)
+                    return (<SideNav Component={component} rprops={props} />)
                 }} />
         );
     }
 };
 
-export default PrivateRoute;
+export default PrivateRouteForAdmin;

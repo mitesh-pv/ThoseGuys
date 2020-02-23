@@ -38,12 +38,6 @@
     border-bottom-right-radius: 50px;
 
   }
-  
-  /* @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-  } */
-
   .navHeading {
     color: wheat;
     font-weight: bold;
@@ -52,4 +46,9 @@
     height: 60px;
     display: flex;
     align-items: center;
+  }
+
+  .logout{
+    position: "absolute";
+    right:"50%"
   }
